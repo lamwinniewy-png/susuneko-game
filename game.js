@@ -18,11 +18,11 @@ const GROUPS = [
 const GW = () => WORDS.slice(...GROUPS[S.group].r);
 const GAMES = [
   { id: 'whack', t: '聽音打兔仔', d: '聽讀音，打中舉起正確詞語的兔仔', ic: '<img src="img/bunny.webp" alt="">', c: 'c-mint', run: () => gWhack() },
-  { id: 'memory', t: '翻翻樂配對', d: '把詞語卡和讀音卡配成一對', ic: '🃏', c: 'c-lav', run: () => gMemory() },
+  { id: 'memory', t: '翻翻樂配對', d: '把詞語卡和讀音卡配成一對', ic: '🎴', c: 'c-lav', run: () => gMemory() },
   { id: 'catch', t: 'Neko 接字', d: '移動籃子，接住詞語缺少的字', ic: '<img src="img/neko_basket.webp" alt="">', c: 'c-sky', run: () => gCatch() },
   { id: 'balloon', t: '氣球砌詞語', d: '按次序戳破氣球，砌出聽到的詞語', ic: '🎈', c: 'c-pink', run: () => gBalloon() },
   { id: 'boss', t: '寫字打怪獸', d: '寫對每一個字，打敗搗蛋小怪獸', ic: '<img src="img/monster.webp" alt="">', c: 'c-butter', run: () => gBoss() }];
-const TROPHY = { whack: '🐰', memory: '🃏', catch: '🧺', balloon: '🎈', boss: '👾' };
+const TROPHY = { whack: '🐰', memory: '🎴', catch: '🧺', balloon: '🎈', boss: '👾' };
 
 /* ---------- audio ---------- */
 let player = new Audio();
@@ -76,7 +76,7 @@ function start(id) {
   document.body.classList.add('playing'); $('#homeBtn').hidden = false; scrollTo(0, 0);
   $('#gTitle').textContent = `${meta.t}・${GROUPS[S.group].name}`;
   G.end = win => finish(win);
-  setHUD();
+  setHUD(); $('#arena').style.background = '';
   meta.run();
 }
 function countdown(cb) {
@@ -109,7 +109,9 @@ function gWhack() {
   G.hearts = 3; G.review = []; setHUD();
   const words = GW(); let target = null, hits = 0, misses = 0, time = 60;
   $('#arena').innerHTML = `<div class="prompt"><button class="btn" id="rep">${SPK} 再聽</button><span class="msg" id="msg">聽清楚讀音，打中舉起這個詞語的兔仔！</span></div>
-    <div class="field" id="field">${Array.from({ length: 9 }, (_, k) => `<div class="hole" data-k="${k}"><div class="bun"><img src="img/bunny.webp" alt=""><b></b></div></div>`).join('')}</div>`;
+    <div class="field" id="field">${Array.from({ length: 9 }, (_, k) => `<div class="hole" data-k="${k}"><div class="mask"><div class="bun"><img src="img/bunny.webp" alt=""><b></b></div></div></div>`).join('')}</div>`;
+  $('#arena').style.background = '#d4f2dc';
+  window.__t = () => target && target.w;
   const holes = [...document.querySelectorAll('.hole')];
   const st = holes.map(() => ({ up: false, w: null, t: 0 }));
   const newTarget = () => { const pool = words.filter(w => !target || w.i !== target.i); target = pool[Math.random() * pool.length | 0]; G.timers.push(setTimeout(() => !G.dead && sayW(target), 350)); };
@@ -182,7 +184,7 @@ function gCatch() {
   const sky = $('#sky'), bk = $('#basket');
   let W = sky.clientWidth, H = sky.clientHeight, bx = W / 2, bw = bk.offsetWidth, items = [], last = performance.now(), spawnT = 0, sinceNeed = 0, keys = {};
   const setRound = () => {
-    cur = queue[qi]; const wc = wrongChar(cur); need = [...cur.w][wc.pos]; wrong = wc.ch;
+    cur = queue[qi]; window.__t = () => need; const wc = wrongChar(cur); need = [...cur.w][wc.pos]; wrong = wc.ch;
     $('#tgt').innerHTML = [...cur.w].map((c, k) => k === wc.pos ? '<span class="blank">？</span>' : c).join('');
     $('#qn').textContent = qi + 1; sayW(cur); sinceNeed = 0;
     items.forEach(it => it.el.remove()); items = [];
@@ -238,7 +240,7 @@ function gBalloon() {
   const sky = $('#sky'); let W = sky.clientWidth, H = sky.clientHeight, items = [], last = performance.now(), spawnT = 0;
   $('#rep').onclick = () => sayW(cur);
   const setRound = () => {
-    cur = queue[qi]; step = 0; mist = 0; $('#qn').textContent = qi + 1;
+    cur = queue[qi]; window.__t = () => cur.w; step = 0; mist = 0; $('#qn').textContent = qi + 1;
     $('#slots').innerHTML = [...cur.w].map(() => '<span></span>').join('');
     items.forEach(it => it.el.remove()); items = []; sayW(cur);
     for (let k = 0; k < 4; k++) spawn(true);
@@ -293,7 +295,7 @@ function gBoss() {
   let cur, writers = [], ci = 0;
   const react = cls => { mon.classList.remove('hurt', 'laugh'); void mon.offsetWidth; mon.classList.add(cls); };
   const round = () => {
-    cur = queue[qi]; ci = 0; const cs = [...cur.w];
+    cur = queue[qi]; window.__t = () => cur.w; ci = 0; const cs = [...cur.w];
     $('#sent').innerHTML = '📖 ' + cur.s.replace(cur.w, '<u>' + '＿'.repeat(cs.length) + '</u>');
     const avail = innerWidth < 720 ? innerWidth - 90 : Math.min(innerWidth, 1060) - 360;
     const sz = Math.round(Math.min(220, Math.max(105, avail / cs.length - 16)));

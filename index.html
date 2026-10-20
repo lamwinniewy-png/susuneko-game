@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Susu & Neko 詞語大冒險</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.8 8 8.7 1-6.4 6 1.7 8.7L16 22.4 8.2 26.7 9.9 18 3.5 12l8.7-1z' fill='%23ffb800'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{
+  --pink:#ff8fb8;--pink-d:#e8558c;--pink-l:#ffe3ee;--pink-xl:#fff4f8;
+  --lav:#c9b6f2;--lav-d:#8e6fd6;--lav-l:#f0e9ff;
+  --mint:#9fe0c9;--mint-d:#2f9e7a;--mint-l:#e3f7ef;
+  --sky:#a9d8ff;--sky-d:#3d8fd6;--sky-l:#e6f3ff;
+  --butter:#ffe08a;--butter-d:#c99500;--butter-l:#fff6d8;
+  --red:#ff6b7f;--ink:#5b3a45;--ink-soft:#8a6772;--line:#f3c9d8;
+  --shadow:0 6px 0 rgba(232,85,140,.18),0 14px 30px rgba(232,85,140,.12);
+  --font:'Huninn','PingFang HK','Microsoft JhengHei','Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+html,body{margin:0;min-height:100%}
+body{font-family:var(--font);color:var(--ink);font-size:18px;line-height:1.45;background:linear-gradient(#dff0ff,#fff0f6 55%,#fff7e3);background-attachment:fixed;min-height:100vh;overflow-x:hidden}
+button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:3px solid var(--lav-d);outline-offset:3px}
+.clouds{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.clouds i{position:absolute;width:160px;height:50px;background:#fff;border-radius:50px;opacity:.85;animation:drift linear infinite}
+.clouds i:before,.clouds i:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.clouds i:before{width:70px;height:70px;left:22px;top:-34px}.clouds i:after{width:50px;height:50px;left:82px;top:-22px}
+@keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(110vw)}}
+.wrap{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:12px 16px 50px}
+header.top{display:flex;align-items:center;gap:10px;background:#fff;border-radius:24px;padding:8px 14px;box-shadow:var(--shadow);margin-bottom:16px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;color:var(--pink-d);line-height:1.15}
+.logo svg{width:38px;height:38px;flex:none}
+.sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:5px;background:var(--butter-l);border:2px solid var(--butter);border-radius:99px;padding:3px 12px;font-size:16px;white-space:nowrap}
+.navbtn{background:var(--pink-l);border:2px solid var(--line);border-radius:99px;padding:5px 14px;font-size:16px;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--pink);color:#fff;border-radius:99px;padding:10px 22px;font-size:19px;box-shadow:0 4px 0 var(--pink-d);transition:transform .1s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--pink-d)}
+.btn.lav{background:var(--lav-d);box-shadow:0 4px 0 #6c50b5}.btn.mint{background:var(--mint-d);box-shadow:0 4px 0 #20785c}
+.btn.ghost{background:#fff;color:var(--pink-d);border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.btn svg{width:22px;height:22px}
+
+/* home */
+.hero{display:grid;grid-template-columns:1fr 300px;align-items:center;background:#fff;border-radius:36px;padding:20px 26px;box-shadow:var(--shadow);border:4px dashed var(--pink-l)}
+.hero h1{margin:0;font-weight:400;font-size:clamp(30px,5vw,48px);color:var(--pink-d);line-height:1.15}
+.hero p{margin:6px 0;color:var(--ink-soft)}
+.hero img{width:100%;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+h2.sec{font-weight:400;font-size:23px;color:var(--pink-d);margin:24px 4px 10px}
+.groups{display:flex;flex-wrap:wrap;gap:10px}
+.gtab{flex:1 1 140px;background:#fff;border:3px solid var(--line);border-radius:20px;padding:8px 12px;text-align:left;box-shadow:0 4px 0 rgba(232,85,140,.12)}
+.gtab b{display:block;font-weight:400;font-size:19px}.gtab span{font-size:13px;color:var(--ink-soft)}
+.gtab[aria-pressed=true]{background:var(--pink);border-color:var(--pink-d);color:#fff}.gtab[aria-pressed=true] span{color:#fff}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.gcard{position:relative;display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;text-align:left;background:#fff;border-radius:28px;padding:14px;box-shadow:var(--shadow);border:3px solid #fff;transition:transform .15s}
+.gcard:hover{transform:translateY(-4px) rotate(-.5deg);border-color:var(--c)}
+.gcard .ic{width:96px;height:96px;border-radius:24px;background:var(--cl);display:grid;place-items:center;font-size:50px;overflow:hidden}
+.gcard .ic img{width:88%;}
+.gcard h3{margin:0;font-weight:400;font-size:22px}.gcard p{margin:2px 0 0;font-size:15px;color:var(--ink-soft)}
+.gcard .best{position:absolute;right:14px;top:10px;font-size:18px;color:#e9d9df;letter-spacing:2px}.gcard .best i{font-style:normal}.gcard .best i.on{color:#ffb800}
+.c-pink{--c:var(--pink);--cl:var(--pink-l)}.c-lav{--c:var(--lav);--cl:var(--lav-l)}.c-mint{--c:var(--mint);--cl:var(--mint-l)}.c-sky{--c:var(--sky);--cl:var(--sky-l)}.c-butter{--c:var(--butter);--cl:var(--butter-l)}
+.trophies{display:flex;flex-wrap:wrap;gap:8px;background:#fff;border-radius:24px;padding:14px;box-shadow:var(--shadow);min-height:70px;align-items:center;color:var(--ink-soft);font-size:16px}
+.trophies span.t{font-size:34px;animation:pop .4s}
+@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.howto{background:var(--lav-l);border:2px solid var(--lav);border-radius:18px;padding:8px 14px;font-size:15px;margin-top:10px}
+
+/* game shell */
+#screen{display:none}
+body.playing #home{display:none}body.playing #screen{display:block}
+.hud{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.hud h2{flex:1;margin:0;font-weight:400;font-size:23px;color:var(--pink-d);min-width:160px}
+.hearts{font-size:22px;letter-spacing:2px}
+.arena{position:relative;background:#fff;border-radius:32px;box-shadow:var(--shadow);overflow:hidden;border:4px solid #fff}
+.prompt{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;padding:12px;background:var(--pink-xl);border-bottom:3px dashed var(--line);min-height:76px}
+.prompt .tgt{font-size:36px;letter-spacing:6px}
+.prompt .tgt .blank{display:inline-block;min-width:44px;border-bottom:4px solid var(--pink);color:var(--pink)}
+.prompt .msg{font-size:18px;color:var(--ink-soft)}
+
+/* whack */
+.field{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,2vw,20px);padding:clamp(12px,3vw,28px);background:linear-gradient(#e9fbe9,#c9f0d4)}
+.hole{position:relative;aspect-ratio:1.15;border-radius:24px;overflow:hidden}
+.hole:after{content:"";position:absolute;left:8%;right:8%;bottom:6%;height:28%;background:radial-gradient(ellipse at center,#8a5b4a 0 55%,#a8735f 56% 70%,transparent 71%);z-index:3;pointer-events:none}
+.hole:before{content:"";position:absolute;left:8%;right:8%;bottom:6%;height:28%;background:radial-gradient(ellipse at center,#5d3a2f 0 50%,transparent 51%);z-index:1}
+.bun{position:absolute;left:50%;bottom:12%;width:78%;transform:translate(-50%,110%);transition:transform .22s cubic-bezier(.3,1.6,.6,1);z-index:2;cursor:pointer}
+.bun img{width:100%;display:block;pointer-events:none}
+.bun b{position:absolute;left:50%;top:3%;height:22%;display:flex;align-items:center;transform:translateX(-50%);font-weight:400;font-size:clamp(17px,3.6vw,30px);white-space:nowrap;letter-spacing:2px;color:var(--ink);pointer-events:none}
+.hole.up .bun{transform:translate(-50%,8%)}
+.hole.hit .bun{animation:squash .3s}
+.hole.bad .bun b{color:var(--red)}
+@keyframes squash{50%{transform:translate(-50%,20%) scale(1.1,.85)}}
+.fx{position:absolute;pointer-events:none;font-size:28px;z-index:9;animation:floatup .9s forwards;color:var(--mint-d)}
+.fx.neg{color:var(--red)}
+@keyframes floatup{to{transform:translateY(-60px);opacity:0}}
+
+/* memory */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,2vw,16px);padding:clamp(12px,3vw,24px);background:var(--lav-l)}
+.mc{aspect-ratio:1/1.05;perspective:800px}
+.mc .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.mc.open .in,.mc.done .in{transform:rotateY(180deg)}
+.mc .f,.mc .b{position:absolute;inset:0;border-radius:20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center;box-shadow:0 5px 0 rgba(142,111,214,.25)}
+.mc .f{background:repeating-linear-gradient(45deg,var(--pink) 0 12px,#ffa8c8 12px 24px);border:4px solid #fff;font-size:38px}
+.mc .b{background:#fff;border:4px solid var(--lav);transform:rotateY(180deg);font-size:clamp(22px,4.5vw,38px);letter-spacing:3px;text-align:center;padding:4px}
+.mc .b.snd{background:var(--sky-l);border-color:var(--sky);color:var(--sky-d)}
+.mc .b.snd svg{width:44%;height:44%}
+.mc.done .b{border-color:var(--mint-d);background:var(--mint-l)}
+.mc.done{animation:pop .4s}
+
+/* catch / balloons */
+.sky{position:relative;height:min(62vh,520px);background:linear-gradient(#cfe9ff,#fff1f7);overflow:hidden;touch-action:none}
+.drop{position:absolute;left:0;top:0;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:36px;background:#fff;border:4px solid var(--pink);box-shadow:0 4px 0 rgba(232,85,140,.25);will-change:transform}
+.drop.star{border-color:var(--butter)}
+.basket{position:absolute;bottom:0;left:0;width:130px;will-change:transform;pointer-events:none}
+.basket img{width:100%;display:block}
+.ground{position:absolute;left:0;right:0;bottom:0;height:18px;background:#bfe9c9}
+.balloon{position:absolute;left:0;top:0;width:78px;height:96px;will-change:transform;cursor:pointer}
+.balloon .bb{width:78px;height:90px;border-radius:50% 50% 48% 48%/55% 55% 45% 45%;display:grid;place-items:center;font-size:38px;color:var(--ink);box-shadow:inset -10px -12px 0 rgba(0,0,0,.06),inset 8px 8px 0 rgba(255,255,255,.45)}
+.balloon:after{content:"";position:absolute;left:38px;top:88px;width:2px;height:40px;background:#c7a9b4}
+.balloon.popped{animation:popb .25s forwards}
+@keyframes popb{to{transform:scale(1.6);opacity:0}}
+.slots{display:flex;gap:8px}
+.slots span{width:58px;height:58px;border-radius:14px;border:3px dashed var(--pink);display:grid;place-items:center;font-size:36px;background:#fff}
+.slots span.ok{border-style:solid;border-color:var(--mint-d);background:var(--mint-l);animation:pop .3s}
+
+/* boss */
+.bossArea{display:grid;grid-template-columns:240px 1fr;gap:16px;padding:16px;background:linear-gradient(var(--lav-l),#fff)}
+.monster{text-align:center}
+.monster img{width:100%;max-width:220px;transition:transform .2s}
+.monster.hurt img{animation:hurt .45s}
+@keyframes hurt{20%{transform:translateX(-14px) rotate(-8deg)}50%{transform:translateX(12px) rotate(6deg)}80%{transform:translateX(-6px)}}
+.monster.laugh img{animation:laugh .5s}
+@keyframes laugh{50%{transform:scale(1.08) translateY(-6px)}}
+.hpbar{height:20px;border-radius:99px;background:#fff;border:3px solid var(--lav);overflow:hidden;margin:6px auto 4px;max-width:220px}
+.hpbar i{display:block;height:100%;background:linear-gradient(90deg,#ff8fb8,#c9b6f2);transition:width .4s}
+.grids{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.tz{position:relative;width:var(--sz,200px);height:var(--sz,200px);background:#fffafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cg stroke='%23f6c4d6' stroke-width='.7' stroke-dasharray='3 2.4' fill='none' vector-effect='non-scaling-stroke'%3E%3Cpath d='M50 0V100M0 50H100M0 0L100 100M100 0L0 100'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat;border:3px solid var(--pink);border-radius:16px;touch-action:none}
+.tz svg{position:absolute;inset:0}
+.tz.active{box-shadow:0 0 0 5px rgba(255,143,184,.35)}.tz.done{border-color:var(--mint-d)}
+.sent{font-size:20px;margin:8px 0;text-align:center}
+.sent u{text-decoration:none;border-bottom:4px solid var(--butter)}
+
+/* overlays */
+.overlay{position:absolute;inset:0;background:rgba(255,244,248,.9);display:grid;place-items:center;z-index:20;text-align:center;padding:20px}
+.overlay .box{max-width:460px}
+.overlay img{width:200px;max-width:55%}
+.overlay h3{font-weight:400;font-size:30px;color:var(--pink-d);margin:6px 0}
+.overlay .stars{font-size:48px;letter-spacing:8px;color:#e9d9df}.overlay .stars i{font-style:normal}.overlay .stars i.on{color:#ffb800}
+.overlay p{margin:6px 0}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.count{font-size:120px;color:var(--pink-d);animation:pop .5s}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(150%);visibility:hidden;background:#fff;border:3px solid var(--pink);border-radius:99px;padding:8px 20px;font-size:19px;box-shadow:var(--shadow);transition:transform .3s,visibility .3s;z-index:60;white-space:nowrap}
+.toast.show{transform:translateX(-50%);visibility:visible}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+.confetti i{position:absolute;top:-30px;font-style:normal;font-size:24px;animation:fall 1.8s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@media (max-width:720px){
+  .hero{grid-template-columns:1fr;text-align:center}.hero img{max-width:200px;margin:0 auto;grid-row:1}
+  .logo{font-size:15px}.logo svg{width:30px;height:30px}.pill,.navbtn{font-size:14px;padding:3px 9px}
+  .bossArea{grid-template-columns:1fr}.monster{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:10px;text-align:left}.monster img{max-width:110px}
+  .mgrid{grid-template-columns:repeat(3,1fr)}
+  .drop{width:54px;height:54px;font-size:30px}.basket{width:104px}
+  .balloon{width:64px}.balloon .bb{width:64px;height:76px;font-size:32px}.balloon:after{left:31px;top:74px}
+  .slots span{width:48px;height:48px;font-size:30px}.prompt .tgt{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){.clouds i,.hero img{animation:none}}
+</style>
+</head>
+<body>
+<div class="clouds" aria-hidden="true"><i style="top:8%;animation-duration:60s"></i><i style="top:30%;animation-duration:85s;animation-delay:-40s"></i><i style="top:62%;animation-duration:75s;animation-delay:-20s"></i></div>
+<div class="wrap">
+<header class="top">
+  <div class="logo"><svg viewBox="0 0 48 48" aria-label="詞語大冒險標誌"><path d="M24 4l5.6 11.6 12.7 1.6-9.3 8.8 2.4 12.6L24 32.4 12.6 38.6 15 26l-9.3-8.8 12.7-1.6z" fill="#ffe08a" stroke="#5b3a45" stroke-width="2.4" stroke-linejoin="round"/><path d="M19 22.5c1.4 1.6 3 2.4 5 2.4s3.6-.8 5-2.4" stroke="#5b3a45" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="18" cy="19" r="1.8" fill="#5b3a45"/><circle cx="30" cy="19" r="1.8" fill="#5b3a45"/><circle cx="15.5" cy="23.5" r="2" fill="#ff8fb8"/><circle cx="32.5" cy="23.5" r="2" fill="#ff8fb8"/></svg>
+  <div>Susu & Neko<br>詞語大冒險</div></div>
+  <div class="sp"></div>
+  <span class="pill" title="總分">🌟 <b id="totalScore" style="font-weight:400">0</b></span>
+  <button class="navbtn" id="soundBtn" aria-label="音效開關">🔔 音效</button>
+  <button class="navbtn" id="homeBtn" hidden>🏠 主頁</button>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <div>
+      <h1>詞語大冒險！</h1>
+      <p>二上一冊・第一、四、八、十二、十四課・40個詞語</p>
+      <p>玩五個小遊戲，邊玩邊記住點寫，11月12日評估一定得！</p>
+      <div class="howto">🔊 全部遊戲都有粵語讀音・所有遊戲已開放</div>
+    </div>
+    <img src="img/cheer.webp" alt="Susu 和 Neko 歡呼">
+  </section>
+  <h2 class="sec">① 揀詞語組別</h2>
+  <div class="groups" id="groups"></div>
+  <h2 class="sec">② 揀遊戲</h2>
+  <div class="games" id="games"></div>
+  <h2 class="sec">我的獎盃</h2>
+  <div class="trophies" id="trophies">玩完遊戲就會得到獎盃！</div>
+</main>
+
+<section id="screen">
+  <div class="hud">
+    <h2 id="gTitle"></h2>
+    <span class="hearts" id="hearts"></span>
+    <span class="pill" id="timer" hidden>⏰ 60</span>
+    <span class="pill">⭐ <b id="score" style="font-weight:400">0</b></span>
+  </div>
+  <div class="arena" id="arena"></div>
+</section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="confetti" id="confetti"></div>
+<script src="js/hanzi-writer.min.js"></script>
+<script src="words.js"></script>
+<script src="game.js?v=1"></script>
+</body>
+</html>
